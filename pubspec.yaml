@@ -1,0 +1,21 @@
+name: type_face_provider
+description: Library which will provide you with collection of typefaces (font families) installed on user device.
+version: 1.0.0
+repository: https://github.com/r1n0x/type_face_provider
+topics:
+  - typeface
+  - font
+  - font-family
+  - style
+platforms:
+  linux:
+
+environment:
+  sdk: ^3.3.3
+
+dependencies:
+  collection: ^1.18.0
+
+dev_dependencies:
+  lints: ^3.0.0
+  test: ^1.24.0
