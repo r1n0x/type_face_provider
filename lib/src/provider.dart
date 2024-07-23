@@ -12,7 +12,7 @@ abstract class TypefacesProvider {
 
   factory TypefacesProvider._setPlatform() {
     if (Platform.isLinux) {
-      return LinuxFontsProvider();
+      return LinuxTypefacesProvider();
     } else if (Platform.isWindows) {
       throw UnimplementedError(
         'Current platform "${Platform.operatingSystem}" is not supported by $TypefacesProvider and it will be supported in the future.',

@@ -6,8 +6,8 @@ import 'package:type_face_provider/src/fc_list_validator.dart';
 import 'package:type_face_provider/src/model.dart';
 import 'package:type_face_provider/type_face_provider.dart';
 
-class LinuxFontsProvider extends TypefacesProvider {
-  LinuxFontsProvider();
+class LinuxTypefacesProvider extends TypefacesProvider {
+  LinuxTypefacesProvider();
 
   static final _fcListValidator = FcListValidator();
   bool? _isFcListInstalled;
@@ -17,12 +17,13 @@ class LinuxFontsProvider extends TypefacesProvider {
   static const _filePathSectionIndex = 0;
   static const _nameSectionIndex = 1;
   static const _stylesSectionIndex = 2;
+  static const _fullNameSectionIndex = 3;
 
   @override
   Future<Typefaces> getTypefaces() async {
     await throwIfFcListIsNotInstalled();
     final Process process = await Process.start('fc-list', [
-      '--format="%{file}$_sectionSeparator%{family}$_sectionSeparator%{style}$_lineSeparator"'
+      '--format="%{file}$_sectionSeparator%{family}$_sectionSeparator%{style}$_sectionSeparator%{fullname}$_lineSeparator"'
     ]);
 
     await process.isFinished;
@@ -39,8 +40,11 @@ class LinuxFontsProvider extends TypefacesProvider {
           .split(',')
           .map((e) => e.trim())
           .toList(growable: false);
-      List<String> fonts = _buildFonts(names, styles);
-      result.add(Typeface(names, file, styles, fonts));
+      final fullNames = sections[_fullNameSectionIndex]
+          .split(',')
+          .map((e) => e.trim())
+          .toList(growable: false);
+      result.add(Typeface(names, file, styles, fullNames));
     }
     return result;
   }
@@ -49,18 +53,8 @@ class LinuxFontsProvider extends TypefacesProvider {
     _isFcListInstalled ??= await _fcListValidator.isInstalled();
     if (!_isFcListInstalled!) {
       throw Exception(
-          'In order to use $LinuxFontsProvider platform you must have \'fc-list\' installed as your system level dependency.');
+          'In order to use $LinuxTypefacesProvider platform you must have \'fc-list\' installed as your system level dependency.');
     }
-  }
-
-  List<String> _buildFonts(List<String> names, List<String> styles) {
-    final List<String> fonts = [];
-    for (final name in names) {
-      for (final style in styles) {
-        fonts.add("$name $style");
-      }
-    }
-    return fonts;
   }
 
   List<String> _parseSections(String line) {

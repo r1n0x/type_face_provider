@@ -14,17 +14,19 @@ void main() async {
     for (final style in typeface.styles) {
       print('\t\t- $style');
     }
-    print('\tfonts:');
-    for (final font in typeface.fonts) {
-      print('\t\t- $font');
+    print('\tfull names:');
+    for (final fullName in typeface.fullNames) {
+      print('\t\t- $fullName');
     }
 
-    /// File: '/usr/share/fonts/truetype/noto/NotoSansMono-Bold.ttf'
-    ///	typefaces:
-    ///		- Noto Sans Mono
-    ///	styles:
-    ///		- Bold
-    ///	fonts:
-    ///		- Noto Sans Mono Bold
+    /// ...
+    /// File: '/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf'
+    /// typefaces:
+    ///   - DejaVu Sans Mono
+    /// styles:
+    ///   - Book
+    /// full names:
+    ///   - DejaVu Sans Mono
+    /// ...
   }
 }
